@@ -33,6 +33,9 @@ switch (keyInput)
         break;
     case "4":
         result = _2024_4_CeresSearch.Execute();
+        Console.WriteLine("Part 1: " + result);
+        result = _2024_4_CeresSearch.ExecutePt2();
+        Console.WriteLine("Part 2: " + result);
         break;
     default:
         result = 0;

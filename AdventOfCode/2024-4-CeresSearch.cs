@@ -96,6 +96,73 @@ namespace AdventOfCode
            
         }
 
+        internal static int ExecutePt2()
+        {
+            var input = File.ReadAllLines("2024Inputs/2024Problem4.txt");
+            var dataSetLength = input.Length;
+            var workingDataSet = new string[input.First().Length, input.Length];
+            var result = 0;
+
+            for (var i = 0; i < input.First().Length; i++)
+            {
+                var temp = input[i].Select(c => c.ToString()).ToArray();
+
+                for (var j = 0; j < temp.Length; j++)
+                {
+                    workingDataSet[i, j] = temp[j];
+                }
+            }
+
+            for (var i = 0; i < input.Length; i++)
+            {
+                for (var j = 0; j < input.First().Length; j++)
+                {
+                    bool validLocation = i>0 && i < dataSetLength - 1 && j > 0 && j < dataSetLength - 1;
+                    if (workingDataSet[i, j].Equals("A", StringComparison.OrdinalIgnoreCase) && validLocation)
+                    {
+                        int masCount = 0;
+                        //Just need 2 M's and 2 S's and its all good.
+                        if (workingDataSet[i-1, j-1].Equals("M", StringComparison.OrdinalIgnoreCase) && workingDataSet[i + 1, j + 1].Equals("S", StringComparison.OrdinalIgnoreCase))
+                        {
+                            masCount++;
+                        }
+                        if(workingDataSet[i - 1, j + 1].Equals("M", StringComparison.OrdinalIgnoreCase) && workingDataSet[i + 1, j - 1].Equals("S", StringComparison.OrdinalIgnoreCase))
+                        {
+                            masCount++;
+                        }
+
+                        if (workingDataSet[i + 1, j - 1].Equals("M", StringComparison.OrdinalIgnoreCase) && workingDataSet[i - 1, j + 1].Equals("S", StringComparison.OrdinalIgnoreCase))
+                        {
+                            masCount++;
+                        }
+                        if (workingDataSet[i + 1, j + 1].Equals("M", StringComparison.OrdinalIgnoreCase) && workingDataSet[i - 1, j - 1].Equals("S", StringComparison.OrdinalIgnoreCase))
+                        {
+                            masCount++;
+                        }
+
+                        if(masCount == 2)
+                        {
+                            result++;
+                        }
+                    }
+                }
+            }
+
+
+
+            //for (var i = 0; i < input.Length; i++)
+            //{
+            //    for (var j = 0; j < input.First().Length; j++)
+            //    {
+            //        Console.Write(workingDataSet[i, j]);
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            return result;
+
+        }
+
         private static int CheckRight(int i, int j, string[,] workingDataSet)
         {
             if (!workingDataSet[i, j + 1].Equals("M", StringComparison.OrdinalIgnoreCase))
